@@ -19,8 +19,8 @@ export const ContainerFormulario = styled.View`
 
 export const ContainerTexto = styled.View`
     flex-direction: row;
+    
     height: 56px;
-    justify-content: space-between;
     padding-top: 10px;
     
     border-bottom-width: 3px;
@@ -30,7 +30,7 @@ export const ContainerTexto = styled.View`
 
 export const Email = styled.TextInput`
     font-size: 16px;
-    width: 100%;
+    flex-grow: 1;
 
 `;
 

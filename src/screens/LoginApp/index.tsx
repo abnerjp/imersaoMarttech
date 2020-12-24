@@ -1,12 +1,11 @@
 import React from 'react';
-import { Text} from 'react-native';
+import { Image, Text} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
     Container, 
     ContainerLogo, 
     ContainerFormulario,
-    CadastreSe,
     ContainerTexto,
     Email,
     BotaoLogin,
@@ -19,7 +18,10 @@ const LoginApp = () => {
   return (
     <Container>
         <ContainerLogo>
-            <Text>LOGO</Text>
+            <Image
+                source={require('../../assets/logo.jpg')}
+                resizeMode="cover"
+            ></Image>
         </ContainerLogo>
         <ContainerFormulario>
             <ContainerTexto>
