@@ -8,6 +8,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ListaLivros from './screens/ListaLivros';
 import DetalheLivro from './screens/DetalheLivro';
 import LoginApp from './screens/LoginApp';
+import NewAccount from './screens/NewAccount';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator headerMode="none">
 
+          <Stack.Screen name="NewAccount" component={NewAccount} />
           <Stack.Screen name="LoginApp" component={LoginApp} />
           <Stack.Screen name="ListaLivros" component={ListaLivros} />
           <Stack.Screen name="DetalheLivro" component={DetalheLivro} />
