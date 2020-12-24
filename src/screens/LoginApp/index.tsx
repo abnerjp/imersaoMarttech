@@ -1,47 +1,48 @@
-import React from 'react';
-import { Image, Text} from 'react-native';
-
+import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Image, TouchableOpacity} from 'react-native';
 import {
-    Container, 
-    ContainerLogo, 
-    ContainerFormulario,
-    ContainerTexto,
-    Email,
-    BotaoLogin,
-    TextoLogin,
-    BotaoCadastro,
-    TextoCadastro
+  Container, 
+  ContainerLogo, 
+  ContainerFormulario,
+  ContainerTextInput,
+  FieldText,
+  BotaoLogin,
+  TextoLogin,
+  BotaoCadastro,
+  TextoCadastro
 } from './styles';
 
 const LoginApp = () => {
+  const [isPassVisible, setPassVisible] = useState(false);
+  const onPressEye = () => setPassVisible (!isPassVisible);
+
   return (
     <Container>
-        <ContainerLogo>
-            <Image
-                source={require('../../assets/logo.jpg')}
-                resizeMode="cover"
-            ></Image>
-        </ContainerLogo>
-        <ContainerFormulario>
-            <ContainerTexto>
-                <Email placeholder="seu@email.com"></Email>
-            </ContainerTexto>
+      <ContainerLogo>
+        <Image
+          source={require('../../assets/logo.jpg')}
+          resizeMode="cover"
+        />
+      </ContainerLogo>
 
-            <ContainerTexto>
-                <Email placeholder="sua.senha"></Email>
-                <Icon name="eye" size={24} color="#000" style={{position: 'relative', paddingTop: 10}} />
-            </ContainerTexto>
-
-            <BotaoLogin>
-                <TextoLogin> Login </TextoLogin>
-            </BotaoLogin>
-            <BotaoCadastro>
-                <TextoCadastro> Cadastre-se </TextoCadastro>
-            </BotaoCadastro>
-
-        </ContainerFormulario>
-    
+      <ContainerFormulario>
+        <ContainerTextInput>
+          <FieldText placeholder="seu@email.com"></FieldText>
+        </ContainerTextInput>
+        <ContainerTextInput>
+          <FieldText placeholder="sua.senha"  secureTextEntry={ !isPassVisible } textContentType="password"></FieldText>
+          <TouchableOpacity onPress={onPressEye}>
+            <Icon name={ !isPassVisible ? "eye" : "eye-slash" } size={24} color="#000" style={{ paddingTop: 10, paddingRight: 5}} />
+          </TouchableOpacity>
+        </ContainerTextInput>
+        <BotaoLogin>
+          <TextoLogin> Login </TextoLogin>
+        </BotaoLogin>
+        <BotaoCadastro>
+          <TextoCadastro> Cadastre-se </TextoCadastro>
+        </BotaoCadastro>
+      </ContainerFormulario>
     </Container>
   );
 };
