@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import AuthContext from '../../contexts/auth';
 import { Image, TouchableOpacity} from 'react-native';
 import {
   Container, 
@@ -10,12 +11,19 @@ import {
   BotaoLogin,
   TextoLogin,
   BotaoCadastro,
-  TextoCadastro
+  TextoCadastro,
 } from './styles';
 
 const LoginApp = () => {
+  const {signed, signIn} = useContext(AuthContext);
+  console.log(signed);
+
   const [isPassVisible, setPassVisible] = useState(false);
   const onPressEye = () => setPassVisible (!isPassVisible);
+
+  function onPressLogin() {
+    signIn();
+  }
 
   return (
     <Container>
@@ -36,7 +44,7 @@ const LoginApp = () => {
             <Icon name={ !isPassVisible ? "eye" : "eye-slash" } size={24} color="#000" style={{ paddingTop: 10, paddingRight: 5}} />
           </TouchableOpacity>
         </ContainerTextInput>
-        <BotaoLogin>
+        <BotaoLogin onPress={onPressLogin}>
           <TextoLogin> Login </TextoLogin>
         </BotaoLogin>
         <BotaoCadastro>

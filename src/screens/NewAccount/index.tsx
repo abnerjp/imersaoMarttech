@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import { Image, TouchableOpacity} from 'react-native';
+import React from 'react';
+import { Image} from 'react-native';
 import {
   Container, 
   ContainerLogo, 
@@ -12,7 +11,6 @@ import {
 } from './styles';
 
 const NewAccount = () => {
-
   return (
     <Container>
       <ContainerLogo>
