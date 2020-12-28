@@ -18,7 +18,7 @@ const Livro = (props: ListaProps) => {
 
   return (
     <ContainerBotao onPress={() => { 
-      navigation.navigate('DetalheLivro', {
+        navigation.navigate('DetalheLivro', {
         livroId: props.data.id
       });
     }}>

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import AuthContext from '../../contexts/auth';
-import { Image, TouchableOpacity} from 'react-native';
+import { useAuth } from '../../contexts/auth';
+import { Image, Keyboard, TouchableOpacity} from 'react-native';
 import {
   Container, 
   ContainerLogo, 
@@ -13,16 +13,36 @@ import {
   BotaoCadastro,
   TextoCadastro,
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginApp = () => {
-  const {signed, signIn} = useContext(AuthContext);
-  console.log(signed);
-
+  const navigation = useNavigation();
+  const {signed, signIn} = useAuth();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const [isPassVisible, setPassVisible] = useState(false);
   const onPressEye = () => setPassVisible (!isPassVisible);
 
   function onPressLogin() {
-    signIn();
+    if (email === '' || senha === '') {
+      console.log('campos vazios');
+      return false;
+    }
+    Keyboard.dismiss();
+
+    signIn({'email': email, 'senha': senha });
+    if (signed) {
+      navigation.navigate('ListaLivros');
+    } 
+    else {
+      console.log('não foi possível fazer o login');
+    }
+  }
+
+  const onPressCadastro = () => {
+    setEmail('');
+    setSenha('');
+    navigation.navigate('NewAccount');
   }
 
   return (
@@ -36,10 +56,20 @@ const LoginApp = () => {
 
       <ContainerFormulario>
         <ContainerTextInput>
-          <FieldText placeholder="seu@email.com"></FieldText>
+          <FieldText 
+            value={email}
+            placeholder="seu@email.com"
+            onChangeText={(valor) => { setEmail(valor); }}
+          ></FieldText>
         </ContainerTextInput>
         <ContainerTextInput>
-          <FieldText placeholder="sua.senha"  secureTextEntry={ !isPassVisible } textContentType="password"></FieldText>
+          <FieldText 
+            value={senha}
+            placeholder="sua.senha" 
+            secureTextEntry={ !isPassVisible } 
+            textContentType="password"
+            onChangeText={(valor) => { setSenha(valor); }}
+          ></FieldText>
           <TouchableOpacity onPress={onPressEye}>
             <Icon name={ !isPassVisible ? "eye" : "eye-slash" } size={24} color="#000" style={{ paddingTop: 10, paddingRight: 5}} />
           </TouchableOpacity>
@@ -47,11 +77,12 @@ const LoginApp = () => {
         <BotaoLogin onPress={onPressLogin}>
           <TextoLogin> Login </TextoLogin>
         </BotaoLogin>
-        <BotaoCadastro>
+        <BotaoCadastro onPress={() => {onPressCadastro()}}>
           <TextoCadastro> Cadastre-se </TextoCadastro>
         </BotaoCadastro>
       </ContainerFormulario>
     </Container>
   );
 };
+
 export default LoginApp;

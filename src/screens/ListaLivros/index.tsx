@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-community/async-storage';
 import Livro from '../../components/Livro';
+import { useAuth } from '../../contexts/auth';
 import {buscaLivros} from '../../services/livro';
 import {
   Container,
@@ -19,28 +21,39 @@ export interface ListaLivrosDTO {
 
 const ListaLivros = () => {
   const [listaDosLivros, setListaDosLivros] = useState<ListaLivrosDTO[]>([]);
+  const [userBoasVindas, setUsetBoasVindas] = useState('');
+  const { signOut } =  useAuth();
 
-  useEffect(() => {
+  useEffect( () => {
     const carregaLivros = async () => {
+      const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
       const resposta = await buscaLivros();
       const json = await resposta.json();
-      //console.log('resposta', json);
+      console.log(storagedUser?.toString());
       setListaDosLivros(json);
+      setUsetBoasVindas(storagedUser?.split('@')[0]);
     };
 
     carregaLivros();
   }, []);
 
+  function logOut() {
+    signOut();
+  }
+
   return (
     <Container>
       <ContainerRow>
-        <NomeUsuario> Olá, Abner </NomeUsuario>
+        <NomeUsuario> Olá, {userBoasVindas} </NomeUsuario>
         <ContainerRow>
           <BotaoCabecalho>
             <Icon name="heart" size={24} color="#000" />
           </BotaoCabecalho>
           <BotaoCabecalho>
             <Icon name="search" size={24} color="#000" />
+          </BotaoCabecalho>
+          <BotaoCabecalho onPress={logOut}>
+            <Icon name="sign-out" size={24} color="#000" />
           </BotaoCabecalho>
         </ContainerRow>
       </ContainerRow>
