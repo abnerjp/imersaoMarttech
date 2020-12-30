@@ -10,6 +10,7 @@ export const buscaLivros = async() => {
     },
   };
   const resposta = await fetch('https://scot13.tst.marttech.com.br/api/Livro/ListarLivros', requestOptions);
+  
   return resposta;
 }
 

@@ -28,9 +28,8 @@ const ListaLivros = () => {
     const carregaLivros = async () => {
       const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
       const resposta = await buscaLivros();
-      const json = await resposta.json();
       console.log(storagedUser?.toString());
-      setListaDosLivros(json);
+      setListaDosLivros((await resposta.json()).data);
       setUsetBoasVindas(storagedUser?.split('@')[0]);
     };
 
