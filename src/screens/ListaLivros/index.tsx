@@ -26,11 +26,10 @@ const ListaLivros = () => {
 
   useEffect( () => {
     const carregaLivros = async () => {
-      const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
-      const resposta = await buscaLivros();
-      console.log(storagedUser?.toString());
-      setListaDosLivros((await resposta.json()).data);
-      setUsetBoasVindas(storagedUser?.split('@')[0]);
+        const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
+        const resposta = await buscaLivros();
+        setListaDosLivros((await resposta.json()).data);
+        setUsetBoasVindas(storagedUser?.split('@')[0]);
     };
 
     carregaLivros();

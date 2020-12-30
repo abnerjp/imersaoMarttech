@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import * as auth from '../services/auth';
 
 interface User {
@@ -18,29 +17,21 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({children}) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadStorageData() {
       setUser(null);
+      setLoading(true);
       const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
       const storagedToken = await AsyncStorage.getItem('@RNAuth:token');
-
       if (storagedUser && storagedToken) {
-        setUser(JSON.parse(storagedUser));
+        setUser({'email':storagedUser});
         setLoading(false);
       }
-    }
+    };
     loadStorageData();
   }, []);
-
-  // async function signIn() {
-  //   const response = await auth.login();
-  //   const { token, user } = response;
-  //   //setUser(response.user);
-  //   await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.user));
-  //   await AsyncStorage.setItem('@RNAuth:token', response.token);
-  // }
 
   async function signIn(infoLogin: auth.FazerLogin)  {
     const response = JSON.parse(await auth.login1(infoLogin));
@@ -56,6 +47,7 @@ export const AuthProvider: React.FC = ({children}) => {
     setUser(null);
     AsyncStorage.removeItem('@RNAuth:user');
     AsyncStorage.removeItem('@RNAuth:token');
+    return;
   }
 
   return (
