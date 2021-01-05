@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useAuth } from '../../contexts/auth';
 import { Image, Keyboard, TouchableOpacity} from 'react-native';
@@ -47,7 +47,6 @@ const LoginApp = () => {
           resizeMode="cover"
         />
       </ContainerLogo>
-
       <ContainerFormulario>
         <ContainerTextInput>
           <FieldText 

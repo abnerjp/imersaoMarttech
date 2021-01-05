@@ -52,7 +52,6 @@ const NewAccount = () => {
           resizeMode="cover"
         />
       </ContainerLogo>
-
       <ContainerFormulario>
         <ContainerTextInput>
           <FieldText 

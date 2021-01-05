@@ -1,5 +1,4 @@
 import React from 'react';
-import Login from '../screens/LoginApp/index';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginApp from '../screens/LoginApp/index';
 import NewAccount from '../screens/NewAccount';

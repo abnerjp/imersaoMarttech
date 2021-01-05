@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useNavigation } from '@react-navigation/native';
 import Livro from '../../components/Livro';
+import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/auth';
 import { buscaLivros } from '../../services/livro';
 import { Text } from 'react-native';
@@ -28,13 +28,12 @@ const ListaLivros = () => {
   const navigation = useNavigation();
   const { signOut } =  useAuth();
   
-
   useEffect( () => {
     const carregaLivros = async () => {
-        const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
-        const resposta = await buscaLivros();
-        setListaDosLivros((await resposta.json()).data);
-        setUsetBoasVindas(storagedUser?.split('@')[0]);
+      const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
+      const resposta = await buscaLivros();
+      setListaDosLivros((await resposta.json()).data);
+      setUsetBoasVindas(storagedUser?.split('@')[0]);
     };
 
     carregaLivros();
@@ -56,7 +55,11 @@ const ListaLivros = () => {
           >
             <Icon name="heart" size={24} color="#000" />
           </BotaoCabecalho>
-          <BotaoCabecalho>
+          <BotaoCabecalho
+            onPress={() => { 
+              navigation.navigate('ListaLivrosBuscar');
+            }}
+          >
             <Icon name="search" size={24} color="#000" />
           </BotaoCabecalho>
           <BotaoCabecalho onPress={logOut}>

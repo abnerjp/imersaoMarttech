@@ -1,8 +1,8 @@
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity, View, StatusBar, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { buscaDetalheLivro, buscaLivrosFavoritos, favoritarLivro, desfavoritarLivro } from '../../services/livro';
 import { 
   Container,
   ContainerRolagem,
@@ -16,7 +16,6 @@ import {
   BotaoFavoritos,
   TextoFavoritos,
 } from './styles';
-import { buscaDetalheLivro, buscaLivrosFavoritos, favoritarLivro, desfavoritarLivro } from '../../services/livro';
 
 interface DetalheLivroDTO {
   id: number;
@@ -102,7 +101,6 @@ const DetalheLivro = () => {
               <TextoDescricao> {detalheLivro?.descricao} </TextoDescricao>
             </ContainerDescricao>
           </ContainerRolagem>
-
         <BotaoFavoritos 
           style={ isFavorito ? { backgroundColor: '#E6E6E6'} : {}}
           onPress={clickedFavorite}
@@ -113,7 +111,6 @@ const DetalheLivro = () => {
             {isFavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
           </TextoFavoritos>
         </BotaoFavoritos>
-
       </Container>
   </>
   );

@@ -9,11 +9,17 @@ export const Container = styled.View`
 export const ContainerRow = styled.View`
     flex-direction: row;
     align-items: center;
+    margin-bottom: 18px;
+    justify-content: center;
 `;
 
-export const NomeUsuario = styled.Text`
-    flex: 1;
-    font-size: 24px;
+export const FieldText = styled.TextInput`
+  border-bottom-width: 3px;
+  border-color: #023E8A;
+  font-size: 16px;
+  flex-grow: 1;
+  margin-left: 16px;
+  margin-right: 16px;
 `;
 
 export const Subtitulo = styled.Text`

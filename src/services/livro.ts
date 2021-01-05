@@ -12,8 +12,8 @@ async function header() {
   };
 }
 
-export const buscaLivros = async() => {
-  const resposta = await fetch(`${baseUrl}api/Livro/ListarLivros`, await header());
+export const buscaLivros = async(filtro = '') => {
+  const resposta = await fetch(`${baseUrl}api/Livro/ListarLivros?filtro=${filtro}`, await header());
   return resposta;
 }
 

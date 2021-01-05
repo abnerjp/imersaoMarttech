@@ -13,7 +13,6 @@ interface ListaProps {
 }
 
 const Livro = (props: ListaProps) => {
-
   const navigation = useNavigation();
 
   return (
@@ -22,11 +21,9 @@ const Livro = (props: ListaProps) => {
         livroId: props.data.id
       });
     }}>
-      
       <LivroImagem resizeMode="cover" source={{ uri: props.data.imagem }}/>
       <NomeLivro> {props.data.nome} </NomeLivro>
       <NomeAutor> {props.data.autor} </NomeAutor>
-
     </ContainerBotao>
   )
 };

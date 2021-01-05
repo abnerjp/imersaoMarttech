@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import {useAuth} from '../contexts/auth';
 import AuthRoutes from './auth.routes';
