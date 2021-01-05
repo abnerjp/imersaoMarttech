@@ -25,6 +25,7 @@ export const AuthProvider: React.FC = ({children}) => {
       setLoading(true);
       const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
       const storagedToken = await AsyncStorage.getItem('@RNAuth:token');
+      setLoading(!!storagedUser);
       if (storagedUser && storagedToken) {
         setUser({'email':storagedUser});
         setLoading(false);
@@ -34,7 +35,7 @@ export const AuthProvider: React.FC = ({children}) => {
   }, []);
 
   async function signIn(infoLogin: auth.FazerLogin)  {
-    const response = JSON.parse(await auth.login1(infoLogin));
+    const response = JSON.parse(await auth.login(infoLogin));
     if (response.success) {
       setLoading(false);
       setUser({'email':infoLogin.email});

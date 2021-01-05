@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { TouchableOpacity, View, StatusBar, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { ListaLivrosDTO } from '../ListaLivros/index';
 import { 
   Container,
   ContainerRolagem,
@@ -17,7 +16,7 @@ import {
   BotaoFavoritos,
   TextoFavoritos,
 } from './styles';
-import { buscaDetalheLivro, listaFavoritos, favoritarLivro, desfavoritarLivro } from '../../services/livro';
+import { buscaDetalheLivro, buscaLivrosFavoritos, favoritarLivro, desfavoritarLivro } from '../../services/livro';
 
 interface DetalheLivroDTO {
   id: number;
@@ -29,7 +28,6 @@ interface DetalheLivroDTO {
 
 const DetalheLivro = () => {
   const [detalheLivro, setDetalheLivro] = useState<DetalheLivroDTO | null>(null);
-  const [livrosFavoritos, setLivrosFavoritos] = useState<ListaLivrosDTO[]>([]);
   const navigation = useNavigation();
   const route = useRoute();
   const [isFavorito, setIsFavorito] = useState(false);
@@ -42,11 +40,19 @@ const DetalheLivro = () => {
         carrega a lista de livros favoritos, para verificar se livro detalhado é um favorito 
         nao é a melhor maneira de verificar se 1 livro é favorito, mas foi a forma encontrada
       */
-      const respostaFavoritos = await listaFavoritos();
-      
-      //setLivrosFavoritos((await respostaFavoritos.json()).data);
-      console.log((await respostaFavoritos.json()));
-      setIsFavorito(!! livrosFavoritos.find(livro => livro.id === livroId));
+      const respostaFavoritos = await buscaLivrosFavoritos();
+      const retorno = await respostaFavoritos.json();
+      var favorito = false;
+      try {
+        for (var i = 0; i < retorno?.data.length && !favorito; i++) {
+          favorito = retorno.data[i].id == livroId; 
+        }
+      }
+      catch {
+        console.log('erro');
+        favorito = false;
+      }
+      setIsFavorito(favorito);
 
       const resposta = await buscaDetalheLivro(livroId);
       setDetalheLivro((await resposta.json()).data);
@@ -55,17 +61,15 @@ const DetalheLivro = () => {
     carregaDetalheLivro();
   }, []);
 
-  async function clickedFavorite() {
+  const clickedFavorite = async() => {
     if (!!detalheLivro) {
       var resp = null;
-      console.log('livroID:', detalheLivro.id);
       if (isFavorito)  {
-        resp = await favoritarLivro(detalheLivro.id);
+        resp = await desfavoritarLivro(detalheLivro.id);
       } 
       else {
-        resp = await desfavoritarLivro(detalheLivro.id);
+        resp = await favoritarLivro(detalheLivro.id);
       }
-      console.log('clicked: --> ',JSON.stringify(resp));
       if (!!resp) {
         setIsFavorito(!isFavorito);
       }
@@ -86,7 +90,7 @@ const DetalheLivro = () => {
             <ContainerInfoPrincipalLivro>
               <View>
                 <TouchableOpacity onPress={() => { navigation.goBack(); }} >
-                  <Icon name="arrow-left" size={24} color="#000" />
+                  <Icon name="angle-left" size={24} color="#000" />
                 </TouchableOpacity>
               </View>
               <ImagemLivro source={{ uri: detalheLivro?.imagem }} resizeMode="contain" />

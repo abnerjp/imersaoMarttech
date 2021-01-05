@@ -1,12 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import Livro from '../../components/Livro';
 import { useAuth } from '../../contexts/auth';
-import {buscaLivros} from '../../services/livro';
+import { buscaLivros } from '../../services/livro';
+import { Text } from 'react-native';
 import {
   Container,
-  ContainerRow,
+  ContainerCabecalho,
+  ContainerConteudoCabecalho,
   NomeUsuario,
   BotaoCabecalho,
   ListagemLivros,
@@ -22,7 +25,9 @@ export interface ListaLivrosDTO {
 const ListaLivros = () => {
   const [listaDosLivros, setListaDosLivros] = useState<ListaLivrosDTO[]>([]);
   const [userBoasVindas, setUsetBoasVindas] = useState('');
+  const navigation = useNavigation();
   const { signOut } =  useAuth();
+  
 
   useEffect( () => {
     const carregaLivros = async () => {
@@ -41,10 +46,14 @@ const ListaLivros = () => {
 
   return (
     <Container>
-      <ContainerRow>
-        <NomeUsuario> Olá, {userBoasVindas} </NomeUsuario>
-        <ContainerRow>
-          <BotaoCabecalho>
+      <ContainerCabecalho>
+        <NomeUsuario> Olá, <Text style={{fontWeight:'bold', textTransform:'capitalize'}}>{userBoasVindas}</Text></NomeUsuario>
+        <ContainerConteudoCabecalho>
+          <BotaoCabecalho
+            onPress={() => { 
+              navigation.navigate('ListaLivrosFavoritos');
+            }}
+          >
             <Icon name="heart" size={24} color="#000" />
           </BotaoCabecalho>
           <BotaoCabecalho>
@@ -53,11 +62,11 @@ const ListaLivros = () => {
           <BotaoCabecalho onPress={logOut}>
             <Icon name="sign-out" size={24} color="#000" />
           </BotaoCabecalho>
-        </ContainerRow>
-      </ContainerRow>
+        </ContainerConteudoCabecalho>
+      </ContainerCabecalho>
       <ListagemLivros
         numColumns={2}
-        data={listaDosLivros}
+        data={ listaDosLivros }
         renderItem={({item}: {item: ListaLivrosDTO}) => <Livro data={item} />}
         keyExtractor={(_, index) => {
           return 'item' + index;

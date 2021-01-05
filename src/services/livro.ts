@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import { baseUrl } from './auth';
 
 async function header() {
   const storagedToken = await AsyncStorage.getItem('@RNAuth:token');
@@ -12,26 +13,26 @@ async function header() {
 }
 
 export const buscaLivros = async() => {
-  const resposta = await fetch('https://scot13.tst.marttech.com.br/api/Livro/ListarLivros', await header());
+  const resposta = await fetch(`${baseUrl}api/Livro/ListarLivros`, await header());
   return resposta;
 }
 
 export const buscaDetalheLivro = async(livroId:number) => {
-  const resposta = await fetch(`https://scot13.tst.marttech.com.br/api/Livro/ListarDetalheLivro/${livroId}`, await header());
+  const resposta = await fetch(`${baseUrl}api/Livro/ListarDetalheLivro/${livroId}`, await header());
   return resposta;
 }
 
-export const listaFavoritos = async() => {
-  const resposta = await fetch(`https://scot13.tst.marttech.com.br/api/Favorito/ListarLivrosFavoritados`, await header());
+export const buscaLivrosFavoritos = async() => {
+  const resposta = await fetch(`${baseUrl}api/Favorito/ListarLivrosFavoritados`, await header());
   return resposta;
 }
 
 export const favoritarLivro = async(livroId:number) => {
-  const resposta = await fetch(`https://scot13.tst.marttech.com.br/api/Favorito/api/Favorito/FavoritarLivro/${livroId}`, await header());
+  const resposta = await fetch(`${baseUrl}api/Favorito/FavoritarLivro/${livroId}`, await header());
   return resposta;
 }
 
 export const desfavoritarLivro = async(livroId:number) => {
-  const resposta = await fetch(`https://scot13.tst.marttech.com.br/api/Favorito/api/Favorito/DesfavoritarLivro/${livroId}`, await header());
+  const resposta = await fetch(`${baseUrl}api/Favorito/DesfavoritarLivro/${livroId}`, await header());
   return resposta;
 }

@@ -31,13 +31,6 @@ const LoginApp = () => {
     Keyboard.dismiss();
 
     signIn({'email': email, 'senha': senha });
-    // if (signed) {
-    //   console.log('logadooo...');
-    //   navigation.navigate('ListaLivros');
-    // } 
-    // else {
-    //   console.log('não foi possível fazer o login');
-    // }
   }
 
   const onPressCadastro = () => {

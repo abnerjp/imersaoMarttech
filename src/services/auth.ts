@@ -1,3 +1,5 @@
+export const baseUrl = 'https://scot13.tst.marttech.com.br/';
+
 export interface FazerLogin {
   email: string;
   senha: string;
@@ -11,7 +13,7 @@ export interface ResponseUser {
   data: { token: string; };
 }
 
-export const login1 = async(user: FazerLogin) =>{
+export const login = async(user: FazerLogin) =>{
   const requestOptions = {
     method: 'POST',
     headers: { 
@@ -21,7 +23,7 @@ export const login1 = async(user: FazerLogin) =>{
     body: JSON.stringify(user),
   };
 
-  const response =  await fetch(`https://scot13.tst.marttech.com.br/api/User/FazerLogin`, requestOptions);
+  const response =  await fetch(`${baseUrl}api/User/FazerLogin`, requestOptions);
   const res = await response.text();
   return res;
 }
